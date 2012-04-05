@@ -57,7 +57,7 @@ pushd "$LIB_SOURCE_DIR"
         "linux")
             export CFLAGS="-m32 -O3 -I$stage/packages/include"
             export CXXFLAGS=$CFLAGS
-            export LDFLAGS="-L$stage/packages/lib/debug"
+            export LDFLAGS="-L$stage/packages/lib/release"
 
            ./configure --prefix="\${PREBUILD_DIR}" \
                        --bindir="\${prefix}/bin" \
@@ -85,7 +85,7 @@ pushd "$LIB_SOURCE_DIR"
         "linux64")
             export CFLAGS="-m64 -O3 -fPIC -I$stage/packages/include"
             export CXXFLAGS=$CFLAGS
-            export LDFLAGS="-L$stage/packages/lib/debug"
+            export LDFLAGS="-L$stage/packages/lib/release"
 
            ./configure --prefix="\${PREBUILD_DIR}" \
                        --bindir="\${prefix}/bin" \
