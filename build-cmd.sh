@@ -7,7 +7,7 @@ set -x
 # make errors fatal
 set -e
 
-PNG_VERSION="1.5.1"
+PNG_VERSION="1.5.10"
 PNG_SOURCE_DIR="libpng-$PNG_VERSION"
 
 if [ -z "$AUTOBUILD" ] ; then 
