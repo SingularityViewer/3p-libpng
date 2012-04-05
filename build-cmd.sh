@@ -1,14 +1,17 @@
 #!/bin/bash
 
-cd "$(dirname "$0")"
+top="$(dirname "$0")"
+stage=$(pwd)
+cd "$top"
 
 # turn on verbose debugging output for parabuild logs.
 set -x
 # make errors fatal
 set -e
+LIB_NAME="libpng"
+LIB_VERSION="1.5.10"
+LIB_SOURCE_DIR="$LIB_NAME-$LIB_VERSION"
 
-PNG_VERSION="1.5.10"
-PNG_SOURCE_DIR="libpng-$PNG_VERSION"
 
 if [ -z "$AUTOBUILD" ] ; then 
     fail
@@ -20,11 +23,14 @@ fi
 
 # load autbuild provided shell functions and variables
 set +x
+# load autbuild provided shell functions and variables
 eval "$("$AUTOBUILD" source_environment)"
+#install prebuilt packages
+eval "$AUTOBUILD install"
 set -x
 
-stage="$(pwd)/stage"
-pushd "$PNG_SOURCE_DIR"
+
+pushd "$LIB_SOURCE_DIR"
     case "$AUTOBUILD_PLATFORM" in
         "windows")
             load_vsvars
@@ -49,22 +55,71 @@ pushd "$PNG_SOURCE_DIR"
 	    cp "$stage/lib/libpng15.a" "$stage/lib/release/"
         ;;
         "linux")
-			# build the release version and link against the release zlib
-			CFLAGS="-m32 -O3 -I$stage/packages/include -L$stage/packages/lib/release" CXXFLAGS="-m32 -O3 -I$stage/packages/include -L$stage/packages/lib/release" ./configure --prefix="$stage" --libdir="$stage/lib/release" --includedir="$stage/include"
-            make
-            make install
+            export CFLAGS="-m32 -O3 -I$stage/packages/include"
+            export CXXFLAGS=$CFLAGS
+            export LDFLAGS="-L$stage/packages/lib/debug"
 
-			# clean the build artifacts
-			make distclean
+           ./configure --prefix="\${PREBUILD_DIR}" \
+                       --bindir="\${prefix}/bin" \
+                       --libdir="\${prefix}/lib/release" \
+                       --includedir="\${prefix}/include"
 
-			# build the debug version and link against the debug zlib
-			CFLAGS="-m32 -O0 -gstabs+ -I$stage/packages/include -L$stage/packages/lib/debug" CXXFLAGS="-m32 -O0 -gstabs+ -I$stage/packages/include -L$stage/packages/lib/debug" ./configure --prefix="$stage" --libdir="$stage/lib/debug" --includedir="$stage/include"
             make
-            make install
+            make install DESTDIR="$stage"
+
+	    # build the debug version and link against the debug zlib
+	    make distclean
+	    export CFLAGS="-m32 -O0 -gstabs+ -I$stage/packages/include"
+	    export CXXFLAGS=$CFLAGS
+            export LDFLAGS="-L$stage/packages/lib/debug"
+
+           ./configure --prefix="\${PREBUILD_DIR}" \
+                       --bindir="\${prefix}/bin" \
+                       --libdir="\${prefix}/lib/debug" \
+                       --includedir="\${prefix}/include"
+
+            make
+            make install DESTDIR="$stage"
+
+        ;;
+        "linux64")
+            export CFLAGS="-m64 -O3 -fPIC -I$stage/packages/include"
+            export CXXFLAGS=$CFLAGS
+            export LDFLAGS="-L$stage/packages/lib/debug"
+
+           ./configure --prefix="\${PREBUILD_DIR}" \
+                       --bindir="\${prefix}/bin" \
+                       --libdir="\${prefix}/lib/release" \
+                       --includedir="\${prefix}/include" \
+                       --with-pic
+
+            make
+            make install DESTDIR="$stage"
+
+	    # build the debug version and link against the debug zlib
+	    make distclean
+	    export CFLAGS="-m64 -O0 -fPIC -gstabs+ -I$stage/packages/include"
+	    export CXXFLAGS=$CFLAGS
+            export LDFLAGS="-L$stage/packages/lib/debug"
+
+           ./configure --prefix="\${PREBUILD_DIR}" \
+                       --bindir="\${prefix}/bin" \
+                       --libdir="\${prefix}/lib/debug" \
+                       --includedir="\${prefix}/include" \
+                       --with-pic
+
+            make
+            make install DESTDIR="$stage"
         ;;
     esac
     mkdir -p "$stage/LICENSES"
     cp LICENSE "$stage/LICENSES/libpng.txt"
 popd
+
+README_DIR="$stage/autobuild-bits"
+README_FILE="$README_DIR/README-Version-3p-$LIB_NAME"
+mkdir -p $README_DIR
+cat $top/.hg/hgrc|grep default |sed  -e "s/default = ssh:\/\/hg@/https:\/\//" > $README_FILE
+echo "Commit $(hg id -i)" >> $README_FILE
 
 pass

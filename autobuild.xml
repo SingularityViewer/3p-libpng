@@ -37,6 +37,18 @@
             <key>name</key>
             <string>linux</string>
           </map>
+          <key>linux64</key>
+          <map>
+            <key>archive</key>
+            <map>
+              <key>hash</key>
+              <string>4a6282da4b2ed976f8be242272647b58</string>
+              <key>url</key>
+              <string>http://localhost/zlib-1.2.6-linux-x86_64-20120405.tar.bz2</string>
+            </map>
+            <key>name</key>
+            <string>linux64</string>
+          </map>
           <key>windows</key>
           <map>
             <key>archive</key>
@@ -87,6 +99,8 @@
           </map>
           <key>manifest</key>
           <array>
+            <string>autobuild-bits/</string>
+            <string>LICENSES/</string>
             <string>include/libpng15/png.h</string>
             <string>include/libpng15/pngconf.h</string>
             <string>include/libpng15/pnglibconf.h</string>
@@ -97,7 +111,7 @@
         <key>darwin</key>
         <map>
           <key>build_directory</key>
-          <string>stage</string>
+          <string>stage-darwin</string>
           <key>configurations</key>
           <map>
             <key>default</key>
@@ -121,7 +135,7 @@
         <key>linux</key>
         <map>
           <key>build_directory</key>
-          <string>stage</string>
+          <string>stage-linux-i686</string>
           <key>configurations</key>
           <map>
             <key>default</key>
@@ -137,18 +151,41 @@
           </map>
           <key>manifest</key>
           <array>
-            <string>lib/release/libpng15.a</string>
-            <string>lib/release/libpng.a</string>
-            <string>lib/debug/libpng15.a</string>
-            <string>lib/debug/libpng.a</string>
+            <string>lib/release/pkgconfig/</string>
+            <string>lib/release/libpng*.*</string>
           </array>
           <key>name</key>
           <string>linux</string>
         </map>
+        <key>linux64</key>
+        <map>
+          <key>build_directory</key>
+          <string>stage-linux-x86_64</string>
+          <key>configurations</key>
+          <map>
+            <key>default</key>
+            <map>
+              <key>build</key>
+              <map>
+              </map>
+              <key>default</key>
+              <string>true</string>
+              <key>name</key>
+              <string>default</string>
+            </map>
+          </map>
+          <key>manifest</key>
+          <array>
+            <string>lib/release/pkgconfig/</string>
+            <string>lib/release/libpng*.*</string>
+          </array>
+          <key>name</key>
+          <string>linux64</string>
+        </map>
         <key>windows</key>
         <map>
           <key>build_directory</key>
-          <string>stage</string>
+          <string>stage-win32</string>
           <key>configurations</key>
           <map>
             <key>default</key>
