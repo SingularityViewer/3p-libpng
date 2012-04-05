@@ -1,5 +1,10 @@
 syntax: glob
-stage/
+*~
+stage*
+log.txt
+*.diff
+*.orig
+*.patch
 autobuild-parabuild-bootstrap/
 libpng-1.5.1/config.log
 *.swp
