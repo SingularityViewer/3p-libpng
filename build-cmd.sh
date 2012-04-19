@@ -57,8 +57,10 @@ pushd "$LIB_SOURCE_DIR"
         "linux")
             export CFLAGS="-m32 -O3 -I$stage/packages/include"
             export CXXFLAGS=$CFLAGS
-            export LDFLAGS="-L$stage/packages/lib/release"
-
+            export LDFLAGS="-m32 -L$stage/packages/lib/release"
+            if [ -f Makefile ]; then
+	      make distclean
+            fi
            ./configure --prefix="\${PREBUILD_DIR}" \
                        --bindir="\${prefix}/bin" \
                        --libdir="\${prefix}/lib/release" \
@@ -71,7 +73,7 @@ pushd "$LIB_SOURCE_DIR"
 	    make distclean
 	    export CFLAGS="-m32 -O0 -gstabs+ -I$stage/packages/include"
 	    export CXXFLAGS=$CFLAGS
-            export LDFLAGS="-L$stage/packages/lib/debug"
+            export LDFLAGS="-m32 -L$stage/packages/lib/debug"
 
            ./configure --prefix="\${PREBUILD_DIR}" \
                        --bindir="\${prefix}/bin" \
@@ -86,7 +88,9 @@ pushd "$LIB_SOURCE_DIR"
             export CFLAGS="-m64 -O3 -fPIC -I$stage/packages/include"
             export CXXFLAGS=$CFLAGS
             export LDFLAGS="-L$stage/packages/lib/release"
-
+            if [ -f Makefile ]; then
+	      make distclean
+            fi
            ./configure --prefix="\${PREBUILD_DIR}" \
                        --bindir="\${prefix}/bin" \
                        --libdir="\${prefix}/lib/release" \
