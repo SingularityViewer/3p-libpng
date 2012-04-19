@@ -30,9 +30,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>39797a9e13ece9c05c713b55ee0175f0</string>
+              <string>fac24df4d1d0358e492099a8dc8f09e8</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-zlib/rev/249037/arch/Linux/installer/zlib-1.2.6-linux-20120207.tar.bz2</string>
+              <string>https://bitbucket.org/ArminW/3p-zlib/downloads/zlib-1.2.6-linux-i686-20120419.tar.bz2</string>
             </map>
             <key>name</key>
             <string>linux</string>
@@ -42,9 +42,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>4a6282da4b2ed976f8be242272647b58</string>
+              <string>39a8cb7012dbc06b101d33b93ab8a6c2</string>
               <key>url</key>
-              <string>http://localhost/zlib-1.2.6-linux-x86_64-20120405.tar.bz2</string>
+              <string>https://bitbucket.org/ArminW/3p-zlib/downloads/zlib-1.2.6-linux-x86_64-20120406.tar.bz2</string>
             </map>
             <key>name</key>
             <string>linux64</string>
