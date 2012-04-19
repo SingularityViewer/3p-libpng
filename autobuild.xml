@@ -30,7 +30,7 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>fac24df4d1d0358e492099a8dc8f09e8</string>
+              <string>3768e55bf51eba512ad7217173e30bc6</string>
               <key>url</key>
               <string>https://bitbucket.org/ArminW/3p-zlib/downloads/zlib-1.2.6-linux-i686-20120419.tar.bz2</string>
             </map>
@@ -42,9 +42,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>39a8cb7012dbc06b101d33b93ab8a6c2</string>
+              <string>3e872c9f7501c0b7639e6835f2cf5575</string>
               <key>url</key>
-              <string>https://bitbucket.org/ArminW/3p-zlib/downloads/zlib-1.2.6-linux-x86_64-20120406.tar.bz2</string>
+              <string>https://bitbucket.org/ArminW/3p-zlib/downloads/zlib-1.2.6-linux-x86_64-20120419.tar.bz2</string>
             </map>
             <key>name</key>
             <string>linux64</string>
