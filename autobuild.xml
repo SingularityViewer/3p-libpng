@@ -42,9 +42,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>3e872c9f7501c0b7639e6835f2cf5575</string>
+              <string>532ba2b7f9a31b93cd272ce834da3177</string>
               <key>url</key>
-              <string>https://bitbucket.org/ArminW/3p-zlib/downloads/zlib-1.2.6-linux-x86_64-20120419.tar.bz2</string>
+              <string>https://bitbucket.org/kokua/3p-zlib/downloads/zlib-1.2.6-linux64-20121024.tar.bz2</string>
             </map>
             <key>name</key>
             <string>linux64</string>
