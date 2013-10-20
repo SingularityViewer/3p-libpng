@@ -32,18 +32,18 @@ set -x
 
 pushd "$LIB_SOURCE_DIR"
     case "$AUTOBUILD_PLATFORM" in
-        "windows")
-            load_vsvars
-            
-            build_sln "projects/vstudio/vstudio.sln" "Release Library|Win32" "pnglibconf"
-            build_sln "projects/vstudio/vstudio.sln" "Debug Library|Win32" "libpng"
-            build_sln "projects/vstudio/vstudio.sln" "Release Library|Win32" "libpng"
+        windows*)
+            if [ "$AUTOBUILD_PLATFORM" == "windows64" ]; then
+                build_target="x64"
+            else
+                build_target="Win32"
+            fi
+            build_sln "projects/vstudio/vstudio.sln" "Debug Library|$build_target"
+            build_sln "projects/vstudio/vstudio.sln" "Release Library|$build_target"
             mkdir -p "$stage/lib/debug"
             mkdir -p "$stage/lib/release"
             cp projects/vstudio/Release\ Library/libpng15.lib "$stage/lib/release/libpng15.lib"
-            cp projects/vstudio/libpng/Release\ Library/vc100*\.?db "$stage/lib/release/"
             cp projects/vstudio/Debug\ Library/libpng15.lib "$stage/lib/debug/libpng15.lib"
-            cp projects/vstudio/libpng/Debug\ Library/vc100*\.?db "$stage/lib/debug/"
             mkdir -p "$stage/include/libpng15"
             cp {png.h,pngconf.h,pnglibconf.h} "$stage/include/libpng15"
         ;;
@@ -119,11 +119,5 @@ pushd "$LIB_SOURCE_DIR"
     mkdir -p "$stage/LICENSES"
     cp LICENSE "$stage/LICENSES/libpng.txt"
 popd
-
-README_DIR="$stage/autobuild-bits"
-README_FILE="$README_DIR/README-Version-3p-$LIB_NAME"
-mkdir -p $README_DIR
-cat $top/.hg/hgrc|grep default |sed  -e "s/default = ssh:\/\/hg@/https:\/\//" > $README_FILE
-echo "Commit $(hg id -i)" >> $README_FILE
 
 pass
